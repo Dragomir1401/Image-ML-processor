@@ -1,5 +1,6 @@
 import pandas as pd
 import torch
+import random
 from torch.utils.data import Dataset, DataLoader
 from sentiment.preprocessing import TextPreprocessor
 
@@ -25,7 +26,7 @@ class SentimentDataset(Dataset):
         sequence = self.preprocessor.text_to_sequence(text)
         sequence = self.preprocessor.pad_sequence(sequence)
         
-        return torch.LongTensor(sequence), torch.LongTensor([label])
+        return torch.LongTensor(sequence), torch.tensor(label, dtype=torch.long)
 
 def load_sentiment_data(data_dir='sentiment_data'):
     train_df = pd.read_csv(f'{data_dir}/train.csv')

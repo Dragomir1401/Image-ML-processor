@@ -108,6 +108,19 @@ def main():
             'augment': False
         },
         {
+            'name': 'SimpleCNN_with_batchnorm',
+            'model_type': 'simple',
+            'dropout': 0.3,
+            'use_batchnorm': True,
+            'optimizer': 'adam',
+            'lr': 0.003,
+            'weight_decay': 1e-4,
+            'batch_size': 128,
+            'epochs': 25,
+            'scheduler': 'plateau',
+            'augment': False
+        },
+        {
             'name': 'SimpleCNN_optimized',
             'model_type': 'simple',
             'dropout': 0.3,
@@ -116,7 +129,7 @@ def main():
             'lr': 0.003,
             'weight_decay': 1e-4,
             'batch_size': 128,
-            'epochs': 20,
+            'epochs': 30,
             'scheduler': 'plateau',
             'augment': True
         }
