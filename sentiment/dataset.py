@@ -16,7 +16,7 @@ class SentimentDataset(Dataset):
         return len(self.texts)
     
     def __getitem__(self, idx):
-        text = self.texts[idx]
+        text = str(self.texts[idx]) if self.texts[idx] is not None else ""
         label = self.labels[idx]
         
         if self.augment and self.augmenter and random.random() < 0.3:
@@ -31,6 +31,9 @@ class SentimentDataset(Dataset):
 def load_sentiment_data(data_dir='sentiment_data'):
     train_df = pd.read_csv(f'{data_dir}/train.csv')
     test_df = pd.read_csv(f'{data_dir}/test.csv')
+    
+    train_df = train_df.dropna(subset=['text'])
+    test_df = test_df.dropna(subset=['text'])
     
     return train_df, test_df
 

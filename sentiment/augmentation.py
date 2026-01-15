@@ -31,7 +31,11 @@ class TextAugmentation:
         return words
     
     def augment_text(self, text, num_aug=1):
+        text = str(text) if text is not None else ""
         words = text.split()
+        
+        if len(words) == 0:
+            return [text]
         
         augmented_texts = []
         for _ in range(num_aug):

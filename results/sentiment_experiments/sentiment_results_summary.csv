@@ -1,0 +1,6 @@
+model,config,accuracy,precision,recall,f1,best_val_acc
+RNN,RNN_baseline,56.13,31.50,56.13,40.36,56.13
+RNN,RNN_deep,56.13,31.50,56.13,40.36,56.13
+LSTM,LSTM_baseline,56.13,31.50,56.13,40.36,56.13
+LSTM,LSTM_bidirectional,84.53,84.55,84.53,84.54,84.53
+LSTM,LSTM_with_augmentation,85.66,85.83,85.66,85.70,85.66
