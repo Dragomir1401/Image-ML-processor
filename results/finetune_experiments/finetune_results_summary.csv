@@ -1,0 +1,3 @@
+dataset,model,config,accuracy,precision,recall,f1,best_val_acc
+land_patches_finetune_all_layers,CNN_finetuned,"{'name': 'finetune_all_layers', 'dropout': 0.3, 'use_batchnorm': True, 'optimizer': 'adam', 'lr': 0.0005, 'weight_decay': 0.0001, 'batch_size': 128, 'epochs': 15, 'scheduler': 'plateau', 'augment': True, 'target_size': (96, 96), 'freeze_features': False}",65.67,64.45,65.67,63.70,65.60
+land_patches_finetune_classifier_only,CNN_finetuned,"{'name': 'finetune_classifier_only', 'dropout': 0.3, 'use_batchnorm': True, 'optimizer': 'adam', 'lr': 0.001, 'weight_decay': 0.0001, 'batch_size': 128, 'epochs': 15, 'scheduler': 'plateau', 'augment': True, 'target_size': (96, 96), 'freeze_features': True}",50.16,51.14,50.16,47.49,52.60

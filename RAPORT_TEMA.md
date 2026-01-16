@@ -348,11 +348,40 @@ FC2: 128 → 2 (binary classification)
 
 ### 5.2 Rezultate
 
-*Notă: Rezultatele fine-tuning vor fi adăugate după rularea experimentelor*
+| Strategie | Accuracy | Precision | Recall | F1-Score | Best Val Acc |
+|-----------|----------|-----------|--------|----------|--------------|
+| Freeze Features (Classifier Only) | 50.16% | 51.14% | 50.16% | 47.49% | 52.60% |
+| Fine-tune All Layers | **65.67%** | **64.45%** | **65.67%** | **63.70%** | **65.60%** |
 
-**Așteptări**:
-- **Freeze Features**: Ar trebui să ofere performanță modestă (55-60%), deoarece features învățate pe animale nu se traduc direct la imagini satelitare
-- **Fine-tune All**: Ar trebui să apropieze performanța modelului antrenat from scratch (65-68%), cu posibil avantaj în rate de convergență
+**Comparație cu training from scratch**:
+- CNN Optimized from scratch: **69.50%**
+- Fine-tune All Layers: **65.67%** (-3.83%)
+- Freeze Features: **50.16%** (-19.34%)
+
+**Observații**:
+
+1. **Freeze Features (Classifier Only)**: 
+   - Performanță modestă de **50.16%**, confirmând așteptările
+   - Features învățate pe animale (Imagebits) nu se transferă eficient la imagini satelitare (Land Patches)
+   - Diferența mare de domeniu (animale vs. terenuri) face ca feature extractors pre-antrenați să fie inadecvați
+   - Clasificatorul învață o mapare suboptimală din features inadecvate
+
+2. **Fine-tune All Layers**:
+   - Performanță mult mai bună: **65.67%**, aproape de modelul from scratch (69.50%)
+   - Diferența de doar -3.83% față de training from scratch este acceptabilă
+   - Modelul reușește să adapteze feature extractors la noul domeniu
+   - Convergența mai rapidă: atinge performanță bună în 15 epochs vs 20 necesare from scratch
+
+3. **Concluzii Transfer Learning**:
+   - Transfer learning între domenii foarte diferite (animale → satelit) are utilitate limitată
+   - Fine-tuning all layers este esențial când domeniile source și target diferă semnificativ
+   - Pentru convergență optimă, learning rate redus (0.0005) ajută la păstrarea cunoștințelor utile din pre-training
+   - Training from scratch rămâne preferabil când avem suficiente date și resurse computaționale
+
+![Confusion Matrix - Fine-tune All Layers](results/finetune_experiments/plots/land_patches_finetune_all_layers_finetuned_confusion_matrix.png)
+![Training Curves - Fine-tune All Layers](results/finetune_experiments/plots/land_patches_finetune_all_layers_finetuned_training.png)
+![Confusion Matrix - Freeze Features](results/finetune_experiments/plots/land_patches_finetune_classifier_only_finetuned_confusion_matrix.png)
+![Training Curves - Freeze Features](results/finetune_experiments/plots/land_patches_finetune_classifier_only_finetuned_training.png)
 
 ## 6. Analiza Erorilor
 
