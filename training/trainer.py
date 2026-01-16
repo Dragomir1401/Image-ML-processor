@@ -53,6 +53,9 @@ class Trainer:
             outputs = self.model(inputs)
             loss = self.criterion(outputs, labels)
             loss.backward()
+            
+            torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=5.0)
+            
             self.optimizer.step()
             
             running_loss += loss.item() * inputs.size(0)
