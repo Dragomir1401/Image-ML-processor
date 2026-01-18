@@ -2,7 +2,7 @@
 
 ## 1. Introducere
 
-Acest proiect implementează și compară diverse arhitecturi de rețele neuronale pentru două task-uri fundamentale de Machine Learning:
+Acest proiect implementează și compară diverse arhitecturi de rețele neuronale pentru două task-uri de Machine Learning:
 - **Clasificare imagini**: Folosind arhitecturi MLP și CNN pe două seturi de date diferite (Imagebits și Land Patches)
 - **Analiza sentimentelor**: Folosind arhitecturi RNN și LSTM pentru text în limba română
 
@@ -277,8 +277,8 @@ FC2: 128 → 2 (binary classification)
 | RNN | Baseline | 56.13% | 31.50% | 56.13% | 40.36% |
 | RNN | Deep | 56.13% | 31.50% | 56.13% | 40.36% |
 | LSTM | Baseline | 56.13% | 31.50% | 56.13% | 40.36% |
-| LSTM | Bidirectional | **84.53%** | **84.55%** | **84.53%** | **84.54%** |
-| LSTM | + Augmentation | **85.66%** | **85.83%** | **85.66%** | **85.70%** |
+| LSTM | Bidirectional | **84.13%** | **84.25%** | **84.13%** | **84.16%** |
+| LSTM | + Augmentation | **85.49%** | **85.62%** | **85.49%** | **85.52%** |
 
 **Observații**:
 - **Problema RNN/LSTM simple**: Modelele RNN baseline, deep și LSTM baseline au prezentat convergență spre local minimum (56.13% = predicție clasa majoritară). Acest lucru indică:
@@ -287,12 +287,12 @@ FC2: 128 → 2 (binary classification)
   - Necesitatea unor arhitecturi mai sofisticate
 
 - **Performanță LSTM bidirectional**:
-  - Îmbunătățire dramatică: 56.13% → 84.53% (+28.40%)
+  - Îmbunătățire dramatică: 56.13% → 84.13% (+28.00%)
   - Bidirectional processing capturează context complet (trecut + viitor)
-  - Precision și recall echilibrate (84.55% / 84.53%), indicând performanță bună pe ambele clase
+  - Precision și recall echilibrate (84.25% / 84.13%), indicând performanță bună pe ambele clase
 
 - **Efect augmentare text**:
-  - RandomSwap + RandomDelete adaugă +1.13% (84.53% → 85.66%)
+  - RandomSwap + RandomDelete adaugă +1.36% (84.13% → 85.49%)
   - Îmbunătățire modestă dar consistentă, indică robustețe crescută la variații în exprimare
   - Aplicat pe 30% din training data pentru a păstra calitatea datelor
 
@@ -324,8 +324,8 @@ FC2: 128 → 2 (binary classification)
 
 **Sentiment**:
 - RNN simple: 56.13% (broken - local minimum)
-- LSTM Bidirectional: 84.53%
-- LSTM + Augmentation: **85.66%** (+29.53% vs RNN)
+- LSTM Bidirectional: 84.13%
+- LSTM + Augmentation: **85.49%** (+29.36% vs RNN)
 
 **Concluzie**: CNN-urile sunt superioare pentru imagini, LSTM bidirectional este optim pentru text. Tehnicile de regularizare (BatchNorm, Dropout, Augmentation) și optimizare (Scheduler, Weight Decay) aduc îmbunătățiri semnificative.
 
@@ -452,27 +452,14 @@ FC2: 128 → 2 (binary classification)
 
 ### 7.3 Lecții învățate
 
-- **Start simple, optimize gradually**: Baseline-uri simple ajută la identificarea problemelor și stabilirea target-urilor realiste
-- **Data exploration is crucial**: Înțelegerea distribuției, variabilității și caracteristicilor datelor ghidează alegerile arhitecturale
-- **Monitoring training**: Loss curves și validation metrics ajută la detectarea overfitting-ului și la ajustarea hiperparametrilor
-- **Domain matters**: Tehnici eficiente pe un domeniu (ex: augmentare pe satelit) pot avea impact diferit pe altul (animale)
+- Baseline-uri simple ajută la identificarea problemelor și stabilirea target-urilor realiste
+- Înțelegerea distribuției, variabilității și caracteristicilor datelor ghidează alegerile arhitecturale
+- Loss curves și validation metrics ajută la detectarea overfitting-ului și la ajustarea hiperparametrilor
+- Tehnici eficiente pe un domeniu (ex: augmentare pe satelit) pot avea impact diferit pe altul (animale)
 
 ## 8. Reproducibilitate
 
-### 8.1 Mediu de dezvoltare
-
-- **Python**: 3.11
-- **PyTorch**: 2.9.1 (CPU)
-- **Biblioteci**: numpy, pandas, matplotlib, seaborn, scikit-learn, Pillow
-
-### 8.2 Hardware și timp de antrenare
-
-- **Procesor**: CPU (fără GPU)
-- **Timp antrenare MLP**: ~5-8 minute per configurație
-- **Timp antrenare CNN**: ~15-25 minute per configurație
-- **Timp antrenare LSTM**: ~40-50 minute per configurație
-
-### 8.3 Seed și reproducibilitate
+### 8.1 Seed și reproducibilitate
 
 Toate experimentele folosesc random seeds fixate pentru reproducibilitate:
 ```python
@@ -480,7 +467,7 @@ torch.manual_seed(42)
 np.random.seed(42)
 ```
 
-### 8.4 Structura proiectului
+### 8.2 Structura proiectului
 
 ```
 AITema2/
@@ -501,21 +488,4 @@ AITema2/
 ├── train_finetune.py              # Script fine-tuning
 └── requirements.txt               # Dependințe
 ```
-
-## 9. Referințe
-
-1. LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). Gradient-based learning applied to document recognition. *Proceedings of the IEEE*.
-
-2. Ioffe, S., & Szegedy, C. (2015). Batch normalization: Accelerating deep network training by reducing internal covariate shift. *ICML*.
-
-3. Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural Computation*.
-
-4. Schuster, M., & Paliwal, K. K. (1997). Bidirectional recurrent neural networks. *IEEE Transactions on Signal Processing*.
-
-5. Wei, J., & Zou, K. (2019). EDA: Easy data augmentation techniques for boosting performance on text classification tasks. *EMNLP*.
-
 ---
-
-**Autor**: [Numele tău]  
-**Data**: Ianuarie 2026  
-**Proiect**: Tema 2 - Machine Learning și Deep Learning
